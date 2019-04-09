@@ -4,7 +4,7 @@ Just a small slim wrapper to avoid doing the same things all over again every ti
 
 This package is ideal for doing micro-framework architectures where your api is distributed thru several independet servers/developments.
 
-## Creating a simple API
+## Creating an API in 1 minute 🧐
 
 Here is an example on how to create a simple api with just one `GET /hello` endpoint
 
@@ -14,7 +14,7 @@ Here is an example on how to create a simple api with just one `GET /hello` endp
     require("./vendor/autoload.php");
 
 	$api = new \SlimAPI\SlimAPI([
-		'name' => 'BreatheCode Student Github Integration - BreatheCode Platform',
+		'name' => 'My Super Duper API',
 		'debug' => true
 	]);
 	
@@ -24,7 +24,7 @@ Here is an example on how to create a simple api with just one `GET /hello` endp
     });
 ```
 
-## Adding a readme to the API
+## 📝 Adding a readme to the API
 
 It is good practice to add a README.md file written in markwdown, just call the `$api->addReadme()` method to specify the URI you will want users to access yout `README.md`
 ```
@@ -35,13 +35,13 @@ $api->addReadme('/readme');
 $api->addReadme('/','./INSTRUCTIONS.md');
 ```
 
-## Adding more endpoints
+## 💻 Adding more endpoints
 
 The API uses [Slim PHP 3.0](http://www.slimframework.com/) on the background, you can add as many endpoints as you like following the [Slim documetation](http://www.slimframework.com/docs/).
 
-Here is a list of examples you can use as guide.
+💡 Here is a [list of examples you can use](https://github.com/alesanchezr/slim-api-wrapper/tree/master/example).
 
-## JWT Authentication
+## 🔑 JWT Authentication
 
 1. To create private/authenticated the endpoints just add `->add($inst->auth());` at the end of the edpoint like this:
 
