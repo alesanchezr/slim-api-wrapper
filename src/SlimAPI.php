@@ -199,6 +199,8 @@ class SlimAPI{
     }
     
     public function addRoutes($func){
+        if(!is_callable($func)) throw new \InvalidArgumentException('AddRoutes expects a callabel function or object but '.gettype($func).' found');
+        
         $this->app = $func($this)->app;
     }
     

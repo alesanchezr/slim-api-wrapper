@@ -23,6 +23,11 @@ class GeneralTests extends SlimAPITestCase
         $this->app->addRoutes(require(__DIR__.'/endpoints.php'));
     }
     
+    public function testInvalidRoutes(){
+        $this->expectException(InvalidArgumentException::class);
+        $this->app->addRoutes('hello');
+    }
+    
     public function testForFailure(){
         $this->mockGET('/hello/fail')->expectFailure(); //expects 400
     }

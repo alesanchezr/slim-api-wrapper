@@ -112,3 +112,10 @@ fetch('https://my_api.com/path/to/endpoint', {
     .then(data => console.log(data))
     .catch(err => console.error("There is a problem on the front-end or the API is down"))
 ```
+
+## Aditional Info
+
+Run the tests:
+```sh
+./vendor/bin/phpunit example/with_tests/tests.php --colors
+```
