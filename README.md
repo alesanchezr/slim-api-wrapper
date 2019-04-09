@@ -9,19 +9,18 @@ This package is ideal for doing micro-framework architectures where your api is 
 Here is an example on how to create a simple api with just one `GET /hello` endpoint
 
 ```php
-	use Psr\Http\Message\ServerRequestInterface as Request;
-	use Psr\Http\Message\ResponseInterface as Response;
-    require("./vendor/autoload.php");
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+require("./vendor/autoload.php");
 
-	$api = new \SlimAPI\SlimAPI([
-		'name' => 'My Super Duper API',
-		'debug' => true
-	]);
-	
-	$api->get('/hello', function (Request $request, Response $response, array $args) use ($api) {
-	        
-        return $response->withJson(["Hello World"]);
-    });
+$api = new \SlimAPI\SlimAPI([
+	'name' => 'My Super Duper API',
+	'debug' => true
+]);
+
+$api->get('/hello', function (Request $request, Response $response, array $args) use ($api) {
+	return $response->withJson(["Hello World"]);
+});
 ```
 
 ## 📝 Adding a readme to the API
