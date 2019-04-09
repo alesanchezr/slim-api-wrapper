@@ -1,8 +1,7 @@
 {
     "name": "alesanchezr/slim-api-wrapper",
     "description": "Build Slim API's really fast",
-    "version": "0.0.2",
-    "type": "composer-plugin",
+    "version": "0.0.3",
     "authors": [
         {
             "name": "Alejandro Sanchez",
