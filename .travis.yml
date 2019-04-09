@@ -1,0 +1,9 @@
+language: php
+php:
+  - '5.3.3'
+  - '7.1'
+  - '7.2'
+install:
+  - composer install
+script:
+  - ./vendor/bin/phpunit example/with_tests/tests.php --colors
