@@ -139,8 +139,8 @@ class SlimAPI{
         $this->jwtKey = $key;
     }
     public function generatePrivateKey($clientId){
-        $this->jwtClients[$p['clientId']] = $this->jwt_encode($clientId);
-        return $this->jwtClients[$p['clientId']];
+        $this->jwtClients[$clientId] = $this->jwt_encode($clientId);
+        return $this->jwtClients[$clientId];
     }
     
     public function get($path, $callback){
@@ -502,7 +502,7 @@ class SlimAPITestCase extends \PHPUnit\Framework\TestCase {
      */
     private function createVirtualAPI(){ 
     	$this->app = new SlimAPI([
-    		'debug' => API_DEBUG,
+    		'debug' => true,
             'settings' => [
                 'authenticate' => false,
                 'displayErrorDetails' => true,
@@ -623,19 +623,19 @@ class AssertResponse{
     function getExpectedRespCode(){ return $this->expectedRespCode; }
     function expectSuccess($code=200){
         $this->test->assertSame($this->response->getStatusCode(), 200);
-        if($this->responseObj->code) $this->test->assertSame($this->responseObj->code, 200);
+        if(isset($this->responseObj->code)) $this->test->assertSame($this->responseObj->code, 200);
         $this->expectedRespCode = $code;
         return new AssertResponse($this->test, $this->response, $this->responseObj);
     }
     function expectFailure($code=400){
         $this->test->assertSame($this->response->getStatusCode(), $code);
-        if($this->responseObj->code) $this->test->assertSame($this->responseObj->code, $code);
+        if(isset($this->responseObj->code)) $this->test->assertSame($this->responseObj->code, $code);
         $this->expectedRespCode = $code;
         return new AssertResponse($this->test, $this->response, $this->responseObj);
     }
     function withProperties($properties){
         $hasProperties = true;
-        $respData = $this->responseObj->data ? $this->responseObj->data : $this->responseObj;
+        $respData = isset($this->responseObj->code) ? $this->responseObj->data : $this->responseObj;
         foreach($properties as $key => $val){
             $this->test->assertObjectHasAttribute($key, $respData);
         }
@@ -643,7 +643,7 @@ class AssertResponse{
     }
     function withPropertiesAndValues($properties){
         $hasProperties = true;
-        $respData = $this->responseObj->data ? $this->responseObj->data : $this->responseObj;
+        $respData = isset($this->responseObj->code) ? $this->responseObj->data : $this->responseObj;
         foreach($properties as $key => $value){
             $this->test->assertObjectHasAttribute($key, $respData);
             if(property_exists($respData, $key)){
