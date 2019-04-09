@@ -1,5 +1,8 @@
 # Slim On Steroids
 
+[![Build Status](https://travis-ci.org/alesanchezr/slim-api-wrapper.svg?branch=master)](https://travis-ci.org/alesanchezr/json-orm)
+[![Coverage Status](https://coveralls.io/repos/github/alesanchezr/slim-api-wrapper/badge.svg?branch=master)](https://coveralls.io/github/alesanchezr/slim-api-wrapper?branch=master)
+
 Just a small slim wrapper to avoid doing the same things all over again every time I start a new API.
 
 This package is ideal for doing micro-framework architectures where your api is distributed thru several independet servers/developments.
