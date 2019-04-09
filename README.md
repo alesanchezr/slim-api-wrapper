@@ -1,3 +1,8 @@
+# Slim On Steroids
+
+Just a small slim wrapper to avoid doing the same things all over again every time I start a new API.
+
+This package is ideal for doing micro-framework architectures where your api is distributed thru several independet servers/developments.
 
 ## Creating a simple API
 
@@ -71,9 +76,9 @@ $clientKey = $api->generatePrivateKey($clientId);
 
 4. Now you can make call any request but you have to add the key to the Request `Authorization` header or as `access_token` on the querystring:
 
-##### Using QueriString
+### Using QueriString for authentication
 
-```
+```js
 //here is an example in Javascript using QueryString autentication
 fetch('https://my_api.com/path/to/endpoint?access_token=ddsfs#@$fsd3425Ds')
     .then(resp => {
@@ -86,9 +91,9 @@ fetch('https://my_api.com/path/to/endpoint?access_token=ddsfs#@$fsd3425Ds')
     .catch(err => console.error("There is a problem on the front-end or the API is down"))
 ```
 
-#### Using `Authorization` header
+### Using `Authorization` header for authentication
 
-```
+```js
 //here is an example in Javascript using QueryString autentication
 fetch('https://my_api.com/path/to/endpoint', {
     'method': 'POST',
