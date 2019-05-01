@@ -7,6 +7,12 @@ Just a small slim wrapper to avoid doing the same things all over again every ti
 
 This package is ideal for doing micro-framework architectures where your api is distributed thru several independet servers/developments.
 
+## Instalation
+
+```bash
+$ composer require alesanchezr/slim-api-wrapper
+```
+
 ## Creating an API in 1 minute 🧐
 
 Here is an example on how to create a simple api with just one `GET /hello` endpoint
