@@ -27,6 +27,7 @@ class SlimAPI{
     var $db = [];
     var $logger = null;
     var $debug = false;
+    var $authPath = '/token/generate';
     var $jwtKey = null;
     var $jwtClients = [];
     var $allowedURLs = [
@@ -40,7 +41,7 @@ class SlimAPI{
         if(!empty($settings['name'])) $this->appName = $settings['name'];
         if(!empty($settings['debug'])) $this->debug = $settings['debug'];
         if(!empty($settings['jwt_key'])) $this->jwtKey = $settings['jwt_key'];
-        if(!empty($settings['jwt_clients'])) $this->jwt_clients = $settings['jwt_clients'];
+        if(!empty($settings['jwt_clients'])) $this->jwtClients = $settings['jwt_clients'];
         if(empty($settings['settings'])) $settings['settings'] = [];
         if(!empty($settings['allowedMethods'])){
             if(!is_array($settings['allowedMethods'])) throw new Exception('allowedMethods must be an array of methods: ["GET","POST", ...]');
@@ -135,6 +136,12 @@ class SlimAPI{
     public function addDB($key, $connector){
 	    $this->db[$key] = $connector;
     }
+
+    public function setJwtClients($clients){
+        if(!is_array($clients) || count($clients) == 0) throw new Exception("JWT Clients must be a non-empty array");
+	    $this->jwtClients = $clients;
+    }
+
     public function setJWTKey($key){
         if(empty($key)) throw new Exception('Invalid JWT key');
         $this->jwtKey = $key;
@@ -166,10 +173,12 @@ class SlimAPI{
     public function auth(){
 
         $privateKey = $this->jwtKey;
-        return function ($request, $response, $next) use ($privateKey) {
+        $authPath = $this->authPath;
+
+        return function ($request, $response, $next) use ($privateKey, $authPath) {
 
             $path = $request->getUri()->getPath();
-            if($path != 'token/generate'){
+            if($path != $authPath){
                 $token = '';
                 $query = $request->getQueryParams();
                 if(isset($query['access_token'])){
@@ -205,11 +214,14 @@ class SlimAPI{
         $this->app = $func($this)->app;
     }
 
-    public function addTokenGenerationPath(){
+    public function addTokenGenerationPath($path = '/token/generate'){
+
+        if(empty($this->jwtKey)) throw new Exception('No jwt_key has been set to the api', 500);
 
         $clients = $this->jwtClients;
-
-        $this->app->post('/token/generate', function (Request $request, Response $response, array $args) use ($clients){
+        $privateKey = $this->jwtKey;
+        $this->authPath = $path;
+        $this->app->post($this->authPath, function (Request $request, Response $response, array $args) use ($clients, $privateKey){
 
             $ct = $request->getHeader('Content-Type');
             $clientId = '';
@@ -231,8 +243,8 @@ class SlimAPI{
 
             }
 
-            if($clients[$clientId] != $cliendPass)
-                throw new Exception('INVALID credentials: client_id and client_pass');
+            if(empty($clients[$clientId]) || $clients[$clientId] != $cliendPass)
+                throw new Exception('INVALID credentials: client_id ('.$clientId.') and client_pass');
 
     		$token = array(
     		    "clientId" => $clientId,
@@ -240,7 +252,7 @@ class SlimAPI{
     		    "exp" => time() + 31556952000 // plus one year in miliseconds
     		);
 
-    		$token['access_token'] = JWT::encode($token,  $this->jwtKey);
+    		$token['access_token'] = JWT::encode($token,  $privateKey);
             return $response->withJson($token);
     	});
     }
