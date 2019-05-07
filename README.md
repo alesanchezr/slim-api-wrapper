@@ -13,6 +13,13 @@ This package is ideal for doing micro-framework architectures where your api is 
 $ composer require alesanchezr/slim-api-wrapper
 ```
 
+If you are going to use Authorization headers you have to allow apache to use HTTP Headers in your `.htaccess`:
+```
+RewriteEngine On
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+```
+
 ## Creating an API in 1 minute 🧐
 
 Here is an example on how to create a simple api with just one `GET /hello` endpoint
