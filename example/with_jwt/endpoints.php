@@ -21,5 +21,13 @@ return function($inst){
 
     })->add($inst->auth());
 
+    $inst->app->get('/encode', function (Request $request, Response $response, array $args) use ($inst) {
+
+        return $response->withJson([
+            "token" => $inst->jwt_encode($_GET["payload"])
+        ]);
+
+    });
+
     return $inst;
 };

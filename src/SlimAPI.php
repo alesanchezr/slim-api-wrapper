@@ -258,6 +258,7 @@ class SlimAPI{
     }
 
     public function jwt_encode($payload, $expiration=31556952000){
+
 		$token = array(
 		    "clientId" => $payload,
 		    "iat" => time(),
