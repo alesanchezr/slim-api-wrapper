@@ -23,6 +23,15 @@ class GeneralTests extends SlimAPITestCase
         $this->app->addRoutes(require(__DIR__.'/endpoints.php'));
     }
 
+
+    public function testJWT(){
+        $encodedToken = $this->app->jwt_encode("Hello world");
+
+        $decodedPayload = $this->app->jwt_decode($encodedToken);
+
+        $this->assertSame($decodedPayload->clientId, "Hello world");
+    }
+
     public function testInvalidRoutes(){
         $this->expectException(InvalidArgumentException::class);
         $this->app->addRoutes('hello');

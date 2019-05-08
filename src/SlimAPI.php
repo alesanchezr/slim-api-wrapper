@@ -268,6 +268,11 @@ class SlimAPI{
 		return JWT::encode($token, $this->jwtKey);
     }
 
+    public function jwt_decode($payload){
+
+		return JWT::decode($payload, $this->jwtKey, array('HS256'));
+    }
+
     public function run(){
         return $this->app->run();
     }
