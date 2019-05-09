@@ -259,6 +259,8 @@ class SlimAPI{
 
     public function jwt_encode($payload, $expiration=31556952000){
 
+        if(empty($this->jwtKey)) throw new Exception('No jwt_key has been set to the api', 500);
+
 		$token = array(
 		    "clientId" => $payload,
 		    "iat" => time(),
@@ -269,6 +271,8 @@ class SlimAPI{
     }
 
     public function jwt_decode($payload){
+
+        if(empty($this->jwtKey)) throw new Exception('No jwt_key has been set to the api', 500);
 
 		return JWT::decode($payload, $this->jwtKey, array('HS256'));
     }
